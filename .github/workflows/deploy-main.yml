@@ -1,6 +1,9 @@
 # Simple workflow for deploying static content to GitHub Pages
 name: Deploy stable release to Pages
 
+env:
+  SITE_DIR: "portfolio"  
+
 on:
   # Runs on pushes targeting the default branch
   push:
@@ -34,11 +37,16 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      - name: Write version.json
+        env:
+          VERSION: ${{ github.ref_name }}
+        run: |
+          jq -n --arg v "$VERSION" '{version: $v}' > "$SITE_DIR/version.json"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload entire repository
-          path: 'portfolio/'
+          path: '$SITE_DIR/'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
