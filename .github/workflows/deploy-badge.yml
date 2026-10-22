@@ -1,0 +1,22 @@
+name: Update deployed stable version badge
+
+on:
+  workflow_run:
+    workflows: ["Deploy stable release to Pages"]
+    types: [completed]
+
+permissions:
+  contents: write
+
+jobs:
+  update-badge:
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'push' &&
+      startsWith(github.event.workflow_run.head_branch, 'v')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print version
+        env:
+          VERSION: ${{ github.event.workflow_run.head_branch }}
+        run: echo "Version $VERSION"
