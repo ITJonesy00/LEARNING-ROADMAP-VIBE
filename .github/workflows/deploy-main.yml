@@ -45,7 +45,7 @@ jobs:
         env:
           VERSION: ${{ inputs.version || github.ref_name }}
         run: |
-          jq -n --arg v "$VERSION" '{version: $v}' > "$SITE_DIR"/version.json"
+          jq -n --arg v "$VERSION" '{version: $v}' > "$SITE_DIR/version.json"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
         with:
