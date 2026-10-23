@@ -2,8 +2,8 @@
 name: Deploy dev test to Pages
 
 env:
-  SITE_DIR: site
-  VERSION: ${{ inputs.version || github.ref_name }}
+  SITE_DIR: "portfolio"
+  VERSION: ${{ github.event.inputs.version || github.ref_name }}
 
 on:
   # Runs on pushes targeting the default branch
