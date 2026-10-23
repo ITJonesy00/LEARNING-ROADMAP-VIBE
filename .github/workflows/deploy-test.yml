@@ -15,7 +15,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: Version écrite dans version.json (vide = nom de la branche)
+        description: Version or branch name version.json 
         required: false
         default: ''
 
