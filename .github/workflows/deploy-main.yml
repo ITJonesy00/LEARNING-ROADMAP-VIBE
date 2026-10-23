@@ -2,7 +2,8 @@
 name: Deploy stable release to Pages
 
 env:
-  SITE_DIR: "portfolio"  
+  SITE_DIR: "portfolio"
+  VERSION: ${{ github.event.inputs.version || github.ref_name }}
 
 on:
   # Runs on pushes targeting the default branch
@@ -42,8 +43,6 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v6
       - name: Write version.json
-        env:
-          VERSION: ${{ inputs.version || github.ref_name }}
         run: |
           jq -n --arg v "$VERSION" '{version: $v}' > "$SITE_DIR/version.json"
       - name: Upload artifact
