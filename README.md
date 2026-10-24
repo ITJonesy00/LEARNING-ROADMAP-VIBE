@@ -1,14 +1,35 @@
 # LEARNING-ROADMAP-VIBE
 
-### CI workflow - minimal
 
-🏁 develop ➡️ deploy ➡️ main 🎉
 
-More details : 
+## Stack
 
-- **develop**: on every push, checks that `index.html` exists, the JavaScript is valid...
-  *Security:* Dependabot (alerts, security fixes, weekly action updates with a 7-day cooldown), CodeQL (JS + workflows), secret scanning, read-only permissions.
-- **deploy**: on every push, rebuilds, then advances `main` and creates a version tag.
-  *Security:* write access limited to the promotion job only, no force-push (fast-forward only), `main` moves only if the build passes.
-- **main**: on every tag, writes the version into `version.json` and publishes the site to GitHub Pages.
-  *Security:* only tags trigger publishing, Pages permissions scoped to this job, `github-pages` environment restricted to tags.
+| Layer | Tool |
+|---|---|
+| **Site** | HTML, CSS, JavaScript (no framework, no build step) |
+| **Hosting** | GitHub Pages |
+| **CI/CD** | GitHub Actions (3 workflows: `dev`, `release`, `deploy`) |
+| **Versioning** | `dev` → `test` → `main` branches, version tags |
+| **Security** | Minimal : Dependabot, secret scanning, OIDC authentication (token) |
+| **Workflow tools** | `jq` (writes `version.json`), GitHub CLI `gh` (triggers the deployment) |
+
+## CI/CD minimal pipeline
+
+The pipeline is deliberately minimal: check, build, tag, publish to GitHub Pages. There is **no separate test environment**: GitHub Pages only offers one site per repository. The `test` branch validates the build but deploys nothing.
+
+### Steps:
+
+🏁 develop ➡️ test ➡️ deploy 🎉
+
+### More details: 
+
+| Step | Trigger | What it does | Security |
+|---|---|---|---|
+| **dev** | push to `develop` | Checks `index.html` exists, the JS is valid,... | Read-only permissions, Dependabot, secret scanning |
+| **test** | push to `test` | Rebuilds, advances `main`, creates the version tag | Write access limited to the promotion job, no force-push, `main` moves only if the build passes |
+| **deploy** | tag pushed in `main` branch| Writes the version into `version.json`, publishes to GitHub Pages | Only tags publish, Pages permissions scoped to this job, OIDC, environment restricted to tags |
+
+
+**Rollback**: Actions → Deploy → Run workflow, then pick the old tag under "Use workflow from".
+
+**Accepted limit**: testing happens on the build, not on real infrastructure. For a larger site, the best practice is a **dedicated staging infrastructure** mirroring production, to validate the actual deployment before release. The structure above stays the same: you add a deployment step to that environment between `test` and production.
