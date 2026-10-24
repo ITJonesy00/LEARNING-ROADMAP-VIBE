@@ -61,4 +61,9 @@ The pipeline is deliberately minimal: check, build, tag, publish to GitHub Pages
 - Verify the tag points to a commit on `main`
 - Pin GitHub Actions to commit SHAs (Dependabot keeps them updated)
 
+## License
+All rights reserved. This repository is published for viewing only. Reuse, modification or redistribution requires my written permission.
+
+> ITJonesy00 - 2026
+
 
