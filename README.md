@@ -2,6 +2,7 @@
 
 [![Release](https://img.shields.io/github/v/release/itjonesy00/starter-portfolio?style=flat-square)](https://github.com/itjonesy00/starter-portfolio/releases/latest) [![Deploy](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fitjonesy00.github.io%2Fstarter-portfolio%2Fversion.json&query=%24.version&label=deployed&style=flat-square)](https://itjonesy00.github.io/starter-portfolio)
 
+
 The **current objective** : A static portfolio that showcases my software engineering practices. It lists the deliverables I produced and the standards they follow.
 
 Each deliverable lives in its own repository. This site is the single entry point that references all of them.
@@ -11,6 +12,7 @@ Each deliverable lives in its own repository. This site is the single entry poin
 - **Codeberg**: The source code, development workflow and releases are maintained on Codeberg, chosen for its specific rules on AI.
 
 ---
+
 ## Stack
 
 | Layer | Tool |
@@ -30,7 +32,8 @@ The pipeline is deliberately minimal: check, build, tag, publish to GitHub Pages
 
 🏁 develop ➡️ test ➡️ deploy 🎉
 
-### More details: 
+<details>
+  <summary> More details </summary>
 
 | Step | Trigger | What it does | Security |
 |---|---|---|---|
@@ -38,6 +41,7 @@ The pipeline is deliberately minimal: check, build, tag, publish to GitHub Pages
 | **test** | push to `test` | Rebuilds, advances `main`, creates the version tag | Write access limited to the promotion job, no force-push, `main` moves only if the build passes |
 | **deploy** | tag pushed in `main` branch| Writes the version into `version.json`, publishes to GitHub Pages | Only tags publish, Pages permissions scoped to this job, OIDC, environment restricted to tags |
 
+</details>
 
 **Rollback**: Actions → Deploy → Run workflow, then pick the old tag under "Use workflow from".
 
@@ -56,3 +60,5 @@ The pipeline is deliberately minimal: check, build, tag, publish to GitHub Pages
 - Post-deploy smoke test (check the live `version.json` matches the tag)
 - Verify the tag points to a commit on `main`
 - Pin GitHub Actions to commit SHAs (Dependabot keeps them updated)
+
+
