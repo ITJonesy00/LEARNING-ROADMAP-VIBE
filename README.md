@@ -2,7 +2,15 @@
 
 [![Release](https://img.shields.io/github/v/release/itjonesy00/starter-portfolio?style=flat-square)](https://github.com/itjonesy00/starter-portfolio/releases/latest) [![Deploy](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fitjonesy00.github.io%2Fstarter-portfolio%2Fversion.json&query=%24.version&label=deployed&style=flat-square)](https://itjonesy00.github.io/starter-portfolio)
 
+The **current objective** : A static portfolio that showcases my software engineering practices. It lists the deliverables I produced and the standards they follow.
 
+Each deliverable lives in its own repository. This site is the single entry point that references all of them.
+
+## Where things live
+- **GitHub**: This site is published here with GitHub Pages.
+- **Codeberg**: The source code, development workflow and releases are maintained on Codeberg, chosen for its specific rules on AI.
+
+---
 ## Stack
 
 | Layer | Tool |
@@ -34,6 +42,14 @@ The pipeline is deliberately minimal: check, build, tag, publish to GitHub Pages
 **Rollback**: Actions → Deploy → Run workflow, then pick the old tag under "Use workflow from".
 
 **Accepted limit**: testing happens on the build, not on real infrastructure. For a larger site, the best practice is a **dedicated staging infrastructure** mirroring production, to validate the actual deployment before release. The structure above stays the same: you add a deployment step to that environment between `test` and production.
+
+---
+
+## Use of AI in this repository
+
+- GitHub Copilot for commit and merge messages
+- A chat assistant for advice on the CI/CD design 
+- Code written and reviewed by me.
 
 ---
 ## Next steps (when the stack grows)
