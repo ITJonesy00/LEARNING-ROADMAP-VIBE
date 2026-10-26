@@ -30,7 +30,10 @@ The pipeline is deliberately minimal: check, build, tag, publish to GitHub Pages
 | **test** | push to `test` | Rebuilds, advances `main`, creates the version tag | Write access limited to the promotion job, no force-push, `main` moves only if the build passes |
 | **deploy** | tag pushed in `main` branch| Writes the version into `version.json`, publishes to GitHub Pages | Only tags publish, Pages permissions scoped to this job, OIDC, environment restricted to tags |
 
-
 **Rollback**: Actions → Deploy → Run workflow, then pick the old tag under "Use workflow from".
 
 **Accepted limit**: testing happens on the build, not on real infrastructure. For a larger site, the best practice is a **dedicated staging infrastructure** mirroring production, to validate the actual deployment before release. The structure above stays the same: you add a deployment step to that environment between `test` and production.
+
+## Mastodon
+
+`mastodon.yml allows for the publishing of portfolio update notifications.
