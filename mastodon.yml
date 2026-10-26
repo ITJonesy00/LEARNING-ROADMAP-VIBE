@@ -1,0 +1,22 @@
+name: Run pipeline Mastodon
+on:
+  workflow_call:
+  workflow_dispatch:
+  
+jobs:
+  toot:
+    name: Post to Mastodon
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Post to Mastodon
+        env:
+          INSTANCE: ${{ secrets.MASTODON_INSTANCE }}
+          TOKEN: ${{ secrets.MASTODON_TOKEN }}
+          SITE_URL: ${{ vars.SITE_URL }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          STATUS=$(printf '[Starter-Portfolio] ☕️ Version %s is live!\n\n%s' "$TAG" "$SITE_URL")
+          curl -sf -X POST "$INSTANCE/api/v1/statuses" \
+            -H "Authorization: Bearer $TOKEN" \
+            --data-urlencode "status=$STATUS"
